@@ -1,11 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Redirect, Req, Param, Query, Headers} from "@nestjs/common";
+import { Controller, Get, Redirect, Req, Param, Query, Headers, Post,Body} from "@nestjs/common";
 import { of } from "rxjs";
 import { Request } from "express";
 
 interface VideoParams{
     id: number;
     name: string;
+}
+
+interface VideoDTO{
+    name: string;
+    tag: string;
+    date: string;
 }
 
 @Controller("/users")
@@ -64,6 +70,14 @@ redirectWallet(){
 getVideos(@Headers('user-agent') headers: string){
     console.log(headers);
     return `Success`;
+    
+}
+
+//----- data Submission  JSON * URL encoded----
+@Post('/video')
+addVideo(@Body() requestData: VideoDTO){
+    console.log(requestData.name, requestData.date);
+    return {success: true};
     
 }
 
