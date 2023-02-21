@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Redirect, Req, Param, Query, Headers, Post,Body} from "@nestjs/common";
+import { Controller, Get, Redirect, Req, Param, Query, Headers, Post,Body, Put, Delete} from "@nestjs/common";
 import { of } from "rxjs";
 import { Request } from "express";
+import { CreateUserDTO } from "./dto";
 
 interface VideoParams{
     id: number;
@@ -13,6 +14,8 @@ interface VideoDTO{
     tag: string;
     date: string;
 }
+
+let USERS = [];
 
 @Controller("/users")
 export class UsersController{
@@ -79,6 +82,41 @@ addVideo(@Body() requestData: VideoDTO){
     console.log(requestData.name, requestData.date);
     return {success: true};
     
+}
+
+@Post()
+addUser(@Body() createUserDto: CreateUserDTO) {
+    USERS.push(createUserDto);
+    return 'User added successfully';
+}
+
+@Get()
+getUsers() {
+    return USERS;
+}
+
+@Get(':id')
+getUser(@Param('id') id: number){
+    return USERS.find((user) => +user.id === +id);
+}
+
+
+@Put(':id')
+updateUser(@Param('id') id: number, @Body() updateUserDTO: CreateUserDTO){
+    const userIdx = USERS.findIndex((user) => +user.id === +id);
+
+    if(!userIdx) {
+        return;
+    }
+    USERS[userIdx] = updateUserDTO;
+}
+
+
+@Delete(':id')
+deleteUser(@Param('id') id: number){
+  USERS =  USERS.filter((user) => +user.id === +id);
+
+
 }
 
 }
