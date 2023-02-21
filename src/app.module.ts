@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { UsersController } from './users.controller';
+import { AlbumsController } from './albums.controller';
+
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+ controllers: [UsersController,AlbumsController],
+
 })
 export class AppModule {}
