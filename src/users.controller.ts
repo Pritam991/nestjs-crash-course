@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Req} from "@nestjs/common";
+import { Controller, Get, Redirect, Req} from "@nestjs/common";
 import { of } from "rxjs";
 import { Request } from "express";
 
@@ -7,14 +7,35 @@ import { Request } from "express";
 export class UsersController{
 
 @Get("/profile")
+@Redirect('/users/account',302)
 getProfile(@Req() req: Request){
-    console.log(req.params
-        );
+
+    const rn = ~~(Math.random() * 10+1);
+    if (rn<5) {
+        return {
+            url: '/users/account',
+            statuscode: 302,
+        };
+
+        
+    }
+    else {
+        return {
+            url: '/users/wallet',
+            statuscode: 302,
+        };
+    }
     
-    return of({
-        hello: "Pritam",
-    });
 
 }
+@Get('/account')
+redirectRoute(){
+    return 'working account';
+}
+@Get('/wallet')
+redirectWallet(){
+    return 'working wallet';
+}
+
 
 }
