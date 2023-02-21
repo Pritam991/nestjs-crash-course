@@ -1,7 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Redirect, Req} from "@nestjs/common";
+import { Controller, Get, Redirect, Req, Param, Query, Headers} from "@nestjs/common";
 import { of } from "rxjs";
 import { Request } from "express";
+
+interface VideoParams{
+    id: number;
+    name: string;
+}
 
 @Controller("/users")
 export class UsersController{
@@ -37,5 +42,29 @@ redirectWallet(){
     return 'working wallet';
 }
 
+//--------Route Parameter-----
+
+// @Get('/videos/:id/:name')
+// getVideos(@Param() params: VideoParams){
+//     console.log(params);
+//     return `Success`;
+    
+// }
+
+//-------QueryParameter
+// @Get('/videos')
+// getVideos(@Query() query: VideoParams){
+//     console.log(query.id, query.name);
+//     return `Success`;
+    
+// }
+
+//-------------Header-----
+@Get('/videos')
+getVideos(@Headers('user-agent') headers: string){
+    console.log(headers);
+    return `Success`;
+    
+}
 
 }
