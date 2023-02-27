@@ -3,10 +3,10 @@ import { Controller, Get, Redirect, Req, Param, Query, Headers, Post,Body, Put, 
 import { of  } from "rxjs";
 
 
-import { CreateUserDTO } from "./dto";
-import { UsersStore } from "./store/users.store";
-import { Store } from "./store/store";
-import { UsersService } from './users.service';
+import { CreateUserDTO } from "../../dto";
+import { UsersStore } from "../../store/users.store";
+import { Store } from "../../store/store";
+import { UsersService } from '../../users.service';
 
 interface VideoParams{
     id: number;
