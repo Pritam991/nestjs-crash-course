@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post, UsePipes } from "@nestjs/common";
+import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CreateJobDTO } from "../dto/create-job.dto";
 import { createJobSchema } from "../schemas/create-job.schema";
 
@@ -10,9 +10,16 @@ import { JoiValidationPipe } from "../pipes/joi-validation.pipe";
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
-  @Post()
-  @UsePipes(new JoiValidationPipe(createJobSchema))
-  createJob(@Body() createJobDto: CreateJobDTO) {
-    return this.jobsService.createJob(createJobDto);
-  }
+@Post()
+createJob(@Body(ValidationPipe) createJobDto: CreateJobDTO){
+  return this.jobsService.createJob(createJobDto);
+}
+
+
+
+  // @Post()
+  // @UsePipes(new JoiValidationPipe(createJobSchema))
+  // createJob(@Body() createJobDto: CreateJobDTO) {
+  //   return this.jobsService.createJob(createJobDto);
+  // }
 }
