@@ -10,10 +10,12 @@ import { JobsModule } from './jobs/jobs.module';
 
 
 
+
 @Module({
     imports: [UsersModule,JobsModule],
  controllers: [UsersController,AlbumsController, UsersController,],
- providers: [UsersService],
+ providers: [UsersService
+],
     
     //UsersStore ,//{provide: Store, useClass: UsersStore,  }, 
   // {provide: 'DATABASE_NAME', useValue:'PRITAM_PROJECT'},
