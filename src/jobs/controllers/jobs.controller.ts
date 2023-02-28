@@ -7,6 +7,7 @@ import { JobsService } from "../services/jobs.service";
 import { JoiValidationPipe } from "../pipes/joi-validation.pipe";
 import { IdExceptionFilter } from '../../exceptions/id-exception.filter';
 import { IdException } from "src/exceptions/id-exceptions";
+import { AppExceptionFilter } from '../../exceptions/app-exception.filter';
 
 @Controller("jobs")
 export class JobsController {
@@ -46,7 +47,8 @@ createJob(@Body(ValidationPipe) createJobDto: CreateJobDTO){
 
   // Handle custon exception filters & HttpException
   @Get(":id")
-  @UseFilters(IdExceptionFilter)
+  // @UseFilters(IdExceptionFilter)
+
   findJobById(@Param("id", ParseIntPipe) id: number) {
     if(id <= 0){
       throw new BadRequestException("Invalid id");
