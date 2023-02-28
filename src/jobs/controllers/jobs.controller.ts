@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CreateJobDTO } from "../dto/create-job.dto";
 import { createJobSchema } from "../schemas/create-job.schema";
 
@@ -22,4 +22,23 @@ createJob(@Body(ValidationPipe) createJobDto: CreateJobDTO){
   // createJob(@Body() createJobDto: CreateJobDTO) {
   //   return this.jobsService.createJob(createJobDto);
   // }
+
+
+  // Exception Filter
+  // @Get(":id")
+  // findJobById(@Param("id", ParseIntPipe) id: number) {
+  //   if(id <= 0){
+  //     throw new Error();
+  //   }
+  //   return { success: true, id};
+  // }
+
+  // Http Exception example
+  @Get(":id")
+  findJobById(@Param("id", ParseIntPipe) id: number) {
+    if(id <= 0){
+      throw new HttpException("Invalid id", HttpStatus.BAD_REQUEST);
+    }
+    return { success: true, id};
+  }
 }
