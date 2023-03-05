@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, UseFilters, UsePipes, ValidationPipe } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Req, UseFilters, UsePipes, ValidationPipe } from "@nestjs/common";
 import { CreateJobDTO } from "../dto/create-job.dto";
 import { createJobSchema } from "../schemas/create-job.schema";
 
@@ -8,15 +8,16 @@ import { JoiValidationPipe } from "../pipes/joi-validation.pipe";
 import { IdExceptionFilter } from '../../exceptions/id-exception.filter';
 import { IdException } from "src/exceptions/id-exceptions";
 import { AppExceptionFilter } from '../../exceptions/app-exception.filter';
+import { Request } from "express";
 
 @Controller("jobs")
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
-@Post()
-createJob(@Body(ValidationPipe) createJobDto: CreateJobDTO){
-  return this.jobsService.createJob(createJobDto);
-}
+// @Post()
+// createJob(@Body(ValidationPipe) createJobDto: CreateJobDTO){
+//   return this.jobsService.createJob(createJobDto);
+// }
 
 
 
@@ -46,13 +47,33 @@ createJob(@Body(ValidationPipe) createJobDto: CreateJobDTO){
   // }
 
   // Handle custon exception filters & HttpException
-  @Get(":id")
+  //@Get(":id")
   // @UseFilters(IdExceptionFilter)
 
-  findJobById(@Param("id", ParseIntPipe) id: number) {
-    if(id <= 0){
-      throw new BadRequestException("Invalid id");
-    }
-    return { success: true, id};
-  }
+  // findJobById(@Param("id", ParseIntPipe) id: number) {
+  //   if(id <= 0){
+  //     throw new BadRequestException("Invalid id");
+  //   }
+  //   return { success: true, id};
+  // }
+
+// middleware concept -------------------------
+@Get("refs")
+findJobRefs(@Req() req: Request) {
+  console.log(req["ua"]);
+  return { success: true, message: "Job refs list"};
+  
+}
+
+@Post("refs")
+createJobRef(){
+  return { success: true, message: "Job ref created"};
+}
+
+@Put(":jobId")
+updateJobId(@Param("jobId", ParseIntPipe) jobId: number){
+  return { success: true, jobId, message: "Job updated"};
+}
+
+
 }
